@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        {# 注释 #}
+        {# {{ }} 存放变量 #}
+        {# {% %} 存放语句 #}
+        <h1>{{ name }}' watchlist</h1>
+        <p>{{movies|length}} titles:</p>
+        <ul>
+            {% for movie in movies %}
+            <li>{{ movie.title}}, {{ movie.year}}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
