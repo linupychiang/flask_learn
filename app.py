@@ -1,4 +1,5 @@
 from flask import Flask
+from markupsafe import escape
 
 app = Flask(__name__)
 
@@ -11,5 +12,11 @@ app = Flask(__name__)
 
 
 @app.route('/')
+@app.route('/hello')
 def hello_flask():
     return 'hello, flask'
+
+
+@app.route('/user/<name>')
+def get_user(name):
+    return {'name': escape(name)}  # 对用户输入内容转义（安全考虑）
