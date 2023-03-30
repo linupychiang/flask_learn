@@ -10,7 +10,8 @@ db_flask_demo = PyMongo(
 
 @app.route('/')
 def get_index():
-    datas = db_flask_demo.db.datas.find({'name': 'zhangsan'}, {'_id': 0})
-    return render_template('index.html',
-                           name=datas[0]['name'],
-                           movies=datas[0]['movies'])
+    users = db_flask_demo.db.user.find({}, {'_id': 0})
+    movies = db_flask_demo.db.movie.find({}, {'_id': 0})
+    user = users[0]['name']
+    movies = [movie for movie in movies]
+    return render_template('index.html', name=user, movies=movies)
