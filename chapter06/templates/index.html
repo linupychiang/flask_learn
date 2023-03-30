@@ -7,6 +7,14 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
-    page
+        user:{{user.name}}
+        <ul>
+            {{movies|length}} movies
+            {% for movie in movies %}
+            <li>
+                {{movie.name}} -- {{movie.year}}
+            </li>
+            {% endfor %}
+        </ul>
     </body>
 </html>
