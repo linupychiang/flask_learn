@@ -33,13 +33,13 @@ def inject_user():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        name = request.form.get('title')
+        title = request.form.get('title')
         year = request.form.get('year')
-        if not name or not year or len(name) > 50 or len(year) > 4:
+        if not title or not year or len(title) > 50 or len(year) > 4:
             flash('Invalid input...')
             return redirect(url_for('index'))
         # 数据更新逻辑
-        db_flask_demo.db.movie.insert_one({'name': name, 'year': year})
+        db_flask_demo.db.movie.insert_one({'title': title, 'year': year})
         flash('item created')
         return redirect(url_for('index'))
 

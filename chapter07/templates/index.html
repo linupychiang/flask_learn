@@ -18,7 +18,6 @@
     <ul class="movie-list">
         {% for movie in movies %}
         <li>
-            {{movie.name}} -- {{movie.year}}
             <span class="float-right">
                 <a class="douban" href="https://search.douban.com/movie/subject_search?search_text={{ movie.name }}" target="_blank" title="Find this movie on douban">douban</a>
             </span>
