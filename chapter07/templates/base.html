@@ -10,6 +10,10 @@
         {% endblock %}
     </head>
     <body>
+    <!-- 插入到页面标题上方 -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
     <h2>
         <img class="avatar" src="{{ url_for('static', filename='imgs/header.png') }}">
         {{ user.name }}'s watchlist
@@ -22,7 +26,7 @@
     {% block content %}
     {% endblock %}
     <footer>
-        <small>&copy; 2023 <a href="http://wlb.plus/">wlb.plus</link>
+        <small>&copy; 2023 <a href="http://wlb.plus/" target="_blank">wlb.plus</link>
     </footer>
     </body>
 </html>

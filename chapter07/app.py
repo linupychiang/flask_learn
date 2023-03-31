@@ -1,7 +1,8 @@
-from flask import Flask, url_for, render_template
+from flask import Flask, flash, request, url_for, render_template, redirect
 from flask_pymongo import PyMongo
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'dev'
 
 db_flask_demo = PyMongo(
     app,
@@ -29,8 +30,19 @@ def inject_user():
     return {'user': user}
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        name = request.form.get('title')
+        year = request.form.get('year')
+        if not name or not year or len(name) > 50 or len(year) > 4:
+            flash('Invalid input...')
+            return redirect(url_for('index'))
+        # 数据更新逻辑
+        db_flask_demo.db.movie.insert_one({'name': name, 'year': year})
+        flash('item created')
+        return redirect(url_for('index'))
+
     movies = db_flask_demo.db.movie.find({}, {'_id': 0})
     movies = [movie for movie in movies]
     return render_template('index.html', movies=movies)
