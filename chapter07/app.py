@@ -69,3 +69,11 @@ def edit_movie(title):
         return redirect(url_for('index'))
 
     return render_template('edit.html', movie=movie)
+
+
+@app.route('/movie/delete/<string:title>', methods=['POST'])
+def delete_movie(title):
+    print(title)
+    db_flask_demo.db.movie.delete_one({'title': title})
+    flash('delete finished')
+    return redirect(url_for('index'))
