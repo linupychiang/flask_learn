@@ -1,20 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
-    </head>
-    <body>
-        user:{{user.name}}
-        <ul>
-            {{movies|length}} movies
-            {% for movie in movies %}
-            <li>
-                {{movie.name}} -- {{movie.year}}
-            </li>
-            {% endfor %}
-        </ul>
-    </body>
-</html>
+{# extends声明继承自（扩展自）base.html #}
+{% extends 'base.html' %}
+
+{# 定义content块，此处内容会插入到基模版的content块中 #}
+{# 默认块重写即覆盖，如果想在父块中追加内容，可以在子块中使用 super() 声明，即 {{ super() }} #}
+
+{% block content %}
+    <p>
+        {{movies|length}} movies
+    </p>
+    <ul class="movie-list">
+        {% for movie in movies %}
+        <li>
+            {{movie.name}} -- {{movie.year}}
+            <span class="float-right">
+                <a class="douban" href="https://search.douban.com/movie/subject_search?search_text={{ movie.name }}" target="_blank" title="Find this movie on douban">douban</a>
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
