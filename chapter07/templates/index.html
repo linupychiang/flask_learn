@@ -18,8 +18,10 @@
     <ul class="movie-list">
         {% for movie in movies %}
         <li>
+            {{movie.title}} -- {{movie.year}}
             <span class="float-right">
-                <a class="douban" href="https://search.douban.com/movie/subject_search?search_text={{ movie.name }}" target="_blank" title="Find this movie on douban">douban</a>
+                <a class="douban" href="https://search.douban.com/movie/subject_search?search_text={{ movie.title }}" target="_blank" title="Find this movie on douban">douban</a>
+                <a class="btn" href="{{ url_for('edit_movie', title=movie.title) }}">Edit</a>
             </span>
         </li>
         {% endfor %}

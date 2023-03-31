@@ -46,3 +46,26 @@ def index():
     movies = db_flask_demo.db.movie.find({}, {'_id': 0})
     movies = [movie for movie in movies]
     return render_template('index.html', movies=movies)
+
+
+@app.route('/movie/edit/<string:title>', methods=['GET', 'POST'])
+def edit_movie(title):
+    movie = db_flask_demo.db.movie.find_one({'title': title}, {'_id': 0})
+    if request.method == 'POST':
+        title = request.form['title']
+        year = request.form['year']
+
+        if not title or not year or len(title) > 50 or len(year) > 4:
+            flash('Invalid input...')
+            return redirect(url_for('edit_movie', title=title))
+
+        db_flask_demo.db.movie.update_one(
+            {'title': movie['title']},
+            {'$set': {
+                'title': title,
+                'year': int(year)
+            }})
+        flash('update finished')
+        return redirect(url_for('index'))
+
+    return render_template('edit.html', movie=movie)
