@@ -1,0 +1,28 @@
+{# extends声明继承自（扩展自）base.html #}
+{% extends 'base.html' %}
+
+{# 定义content块，此处内容会插入到基模版的content块中 #}
+{# 默认块重写即覆盖，如果想在父块中追加内容，可以在子块中使用 super() 声明，即 {{ super() }} #}
+
+{% block content %}
+    <p>
+        {{movies|length}} movies
+    </p>
+    <form method=post>
+        <label>name</label>
+        <input type="text" name="title" autocomplete="off" required>
+        <label>year</label>
+        <input type="text" name="year" autocomplete="off" required>
+        <input class="btn" type="submit" name="submit" value="提交">
+    </form>
+    <ul class="movie-list">
+        {% for movie in movies %}
+        <li>
+            {{movie.name}} -- {{movie.year}}
+            <span class="float-right">
+                <a class="douban" href="https://search.douban.com/movie/subject_search?search_text={{ movie.name }}" target="_blank" title="Find this movie on douban">douban</a>
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
