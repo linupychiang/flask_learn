@@ -8,22 +8,29 @@
     <p>
         {{movies|length}} movies
     </p>
-    <form method="post">
-        <label>name</label>
-        <input type="text" name="title" autocomplete="off" required>
-        <label>year</label>
-        <input type="text" name="year" autocomplete="off" required>
-        <input class="btn" type="submit" name="submit" value="提交">
-    </form>
+    {# 非登录状态不显示 #}
+    {% if current_user.is_authenticated %}
+        <form method="post">
+            <label>name</label>
+            <input type="text" name="title" autocomplete="off" required>
+            <label>year</label>
+            <input type="text" name="year" autocomplete="off" required>
+            <input class="btn" type="submit" name="submit" value="提交">
+        </form>
+    {% endif %}
     <ul class="movie-list">
         {% for movie in movies %}
         <li>
             {{movie.title}} -- {{movie.year}}
             <span class="float-right">
-                <a class="btn" href="{{ url_for('edit_movie', title=movie.title) }}">Edit</a>
-                <form class="inline-form" method="post" action="{{ url_for('delete_movie', title=movie.title) }}">
-                    <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
-                </form>
+                <!-- {{ current_user.is_authenticated }} -->
+                {# 非登录状态不显示 #}
+                {% if current_user.is_authenticated %}
+                    <a class="btn" href="{{ url_for('edit_movie', title=movie.title) }}">Edit</a>
+                    <form class="inline-form" method="post" action="{{ url_for('delete_movie', title=movie.title) }}">
+                        <input class="btn" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
+                    </form>
+                {% endif %}
                 <a class="douban" href="https://search.douban.com/movie/subject_search?search_text={{ movie.title }}" target="_blank" title="Find this movie on douban">douban</a>
             </span>
         </li>
