@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block head %}
+        <title>{{ user.name }}'s watchlist</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}" >
+        <link rel="icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}">
+        {% endblock %}
+    </head>
+    <body>
+    <!-- 插入到页面标题上方 -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
+    <h2>
+        <img class="avatar" src="{{ url_for('static', filename='imgs/header.png') }}">
+        {{ user.name }}'s watchlist
+    </h2>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">home</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('settings') }}">settings</a></li>
+                <li><a href="{{ url_for('logout') }}">logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    <footer>
+        <small>&copy; 2023 <a href="http://wlb.plus/" target="_blank">wlb.plus</link>
+    </footer>
+    </body>
+</html>
